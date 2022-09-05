@@ -14,8 +14,10 @@ const users = [
   }
 ];
 
+
 const Users = ({ children }) => {
   return children.map((child) => {
+     
     // check if child is a component
     if (typeof child.type === "function") {
       return users.map((user, index) => {
