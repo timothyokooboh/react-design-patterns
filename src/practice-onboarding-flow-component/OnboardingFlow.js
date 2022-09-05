@@ -3,8 +3,8 @@ import { useState, cloneElement, isValidElement, Children, useEffect } from 'rea
 const OnboardingFlow = ({children }) => {
     const [flowState, setFlowState] = useState({
       currentIndex: 0,
-      showNextBtn: true,
-      showPrevBtn: true,
+      showNextBtn: false,
+      showPrevBtn: false,
     })
     
     
@@ -18,21 +18,24 @@ const OnboardingFlow = ({children }) => {
     
     const currentStep = Children.toArray(children)[flowState.currentIndex]
     
-    useEffect(() => {
-      if (flowState.currentIndex == 0) {
-        setFlowState({...flowState, showPrevBtn: false})
-      } else {
-        setFlowState({...flowState, showPrevBtn: true})
-      }
-      
-      if (flowState.currentIndex === children.length - 1) {
-        setFlowState({...flowState, showNextBtn: false})
-      } else {
-        setFlowState({...flowState, showNextBtn: true})
-      }
-    }, [flowState])
     
- if(isValidElement(currentStep)){
+    useEffect(() => {
+      const timeoutId = setTimeout(() => {
+        if (flowState.currentIndex == 0) {
+          setFlowState({...flowState, showPrevBtn: false, showNextBtn: true})
+        } else if(flowState.currentIndex === children.length - 1) {
+          setFlowState({...flowState, showPrevBtn: true, showNextBtn: false})
+        } else {
+          setFlowState({...flowState, showNextBtn: true, showPrevBtn: true})
+      }
+        
+      }, 100)
+      
+      return () => clearTimeout(timeoutId)
+    }, [flowState.currentIndex])
+    
+    
+ if(typeof currentStep.type === 'function'){
         return (
           cloneElement(currentStep, 
           {
