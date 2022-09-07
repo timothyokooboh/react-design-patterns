@@ -2,8 +2,11 @@ import Users from "./practice_react-scoped-slots/Users";
 import User from "./practice_react-scoped-slots/User";
 import OnboardingFlow from './practice-onboarding-flow-component/OnboardingFlow'
 import OnboardingStep from './practice-onboarding-flow-component/OnboardingStep'
+import DynamicComponent from './practice-dynamic-component/DynamicComponent'
+import ComponentA from './practice-dynamic-component/ComponentA'
+import ComponentB from './practice-dynamic-component/ComponentB'
 import "./styles.css";
-// import { useState } from "react";
+import { useState } from "react";
 
 const onboardingStepsData = [
     {
@@ -28,16 +31,29 @@ export default function App() {
                         onboardingInfo={step}
                     />) 
                 })
+  
+  const components = {
+    'componentA': ComponentA,
+    'componentB': ComponentB
+  }      
+        
+  const [component, setComponent] = useState('componentA')
         
   return (
     <div className="App">
-        <OnboardingFlow >
+        <div>
+          <span onClick={() => setComponent('componentA')}> component A</span>
+          <span onClick={() => setComponent('componentB')}> component B</span>
+        </div>
+        { /*<OnboardingFlow >
             {childComponents}
-        </OnboardingFlow>
+        </OnboardingFlow> */ }
       {/*<Users>
         <User></User>
         <div>anything goes here</div>
       </Users>*/}
+      
+      <DynamicComponent Component={components[component]}/>
     </div>
   );
 }
