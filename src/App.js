@@ -2,7 +2,7 @@ import Users from "./practice_react-scoped-slots/Users";
 import User from "./practice_react-scoped-slots/User";
 import OnboardingFlow from './practice-onboarding-flow-component/OnboardingFlow'
 import OnboardingStep from './practice-onboarding-flow-component/OnboardingStep'
-import DynamicComponent from './practice-dynamic-component/DynamicComponent'
+import dynamicComponent from './practice-dynamic-component/DynamicComponent'
 import ComponentA from './practice-dynamic-component/ComponentA'
 import ComponentB from './practice-dynamic-component/ComponentB'
 import "./styles.css";
@@ -38,6 +38,8 @@ export default function App() {
   }      
         
   const [component, setComponent] = useState('componentA')
+  
+  const ComponentWrapper = dynamicComponent(components[component])
         
   return (
     <div className="App">
@@ -53,7 +55,7 @@ export default function App() {
         <div>anything goes here</div>
       </Users>*/}
       
-      <DynamicComponent Component={components[component]}/>
+      <ComponentWrapper data={{title: 'did it work?', city: 'prague'}}/>
     </div>
   );
 }

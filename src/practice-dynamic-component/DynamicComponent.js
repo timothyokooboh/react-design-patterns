@@ -1,6 +1,6 @@
 
-const DynamicComponent = ({Component}) => {
-    return <Component />
+const dynamicComponent = (Component) => {
+    return (props) => <Component {...props} />
 }
 
-export default DynamicComponent
+export default dynamicComponent
